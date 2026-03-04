@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="OrderManagement.WPF.Views.AddressHistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:OrderManagement.WPF.Converters">
+    <UserControl.Resources>
+        <converters:PaymentTypeConverter x:Key="PaymentTypeConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+            <Button Content="← Назад" Command="{Binding GoBackCommand}" Style="{StaticResource SecondaryButton}"/>
+            <TextBlock Text="История:" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"
+                       Foreground="#1E293B" Margin="8,0,8,0"/>
+            <TextBlock Text="{Binding Address.Name}" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"
+                       Foreground="#3B82F6"/>
+        </StackPanel>
+
+        <!-- Toolbar -->
+        <WrapPanel Grid.Row="1" Margin="0,0,0,12">
+            <Button Content="＋ Добавить" Command="{Binding AddCommand}"/>
+            <Button Content="✎ Редактировать" Command="{Binding EditCommand}"/>
+            <Button Content="✕ Удалить" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}"/>
+            <Button Content="↕ Сортировка" Command="{Binding ToggleSortCommand}" Style="{StaticResource SecondaryButton}"/>
+            <Button Content="Сбросить фильтр" Command="{Binding ClearFilterCommand}" Style="{StaticResource SecondaryButton}"/>
+        </WrapPanel>
+
+        <!-- Date Filters -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,12">
+            <TextBlock Text="С:" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="#475569"/>
+            <DatePicker SelectedDate="{Binding DateFrom}" Width="160" Margin="0,0,20,0"/>
+            <TextBlock Text="По:" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="#475569"/>
+            <DatePicker SelectedDate="{Binding DateTo}" Width="160"/>
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="3"
+                  ItemsSource="{Binding Histories}"
+                  SelectedItem="{Binding SelectedHistory}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата" Binding="{Binding PumpingDate, StringFormat=dd.MM.yyyy}" Width="140"/>
+                <DataGridTextColumn Header="Кубы" Binding="{Binding CubeAmount}" Width="100"/>
+                <DataGridTextColumn Header="Тип оплаты" Binding="{Binding PaymentType, Converter={StaticResource PaymentTypeConverter}}" Width="140"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat=N2}" Width="140"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="OrderManagement.WPF.Views.AddressListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:OrderManagement.WPF.Converters">
+    <UserControl.Resources>
+        <converters:PaymentTypeConverter x:Key="PaymentTypeConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="Адреса" FontSize="24" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,16"/>
+
+        <!-- Toolbar -->
+        <WrapPanel Grid.Row="1" Margin="0,0,0,12">
+            <Button Content="＋ Добавить" Command="{Binding AddCommand}"/>
+            <Button Content="✎ Редактировать" Command="{Binding EditCommand}"/>
+            <Button Content="✕ Удалить" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}"/>
+            <Button Content="📋 История" Command="{Binding OpenHistoryCommand}"/>
+            <Button Content="↕ Сортировка" Command="{Binding ToggleSortCommand}" Style="{StaticResource SecondaryButton}"/>
+            <Button Content="⟳ Обновить" Command="{Binding LoadCommand}" Style="{StaticResource SecondaryButton}"/>
+        </WrapPanel>
+
+        <!-- Filter -->
+        <Grid Grid.Row="2" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Поиск по названию:" VerticalAlignment="Center" Margin="0,0,10,0"
+                       Foreground="#475569"/>
+            <TextBox Grid.Column="1" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged, Delay=300}"/>
+        </Grid>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="3"
+                  ItemsSource="{Binding Addresses}"
+                  SelectedItem="{Binding SelectedAddress}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  CanUserAddRows="False">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenHistoryCommand}"/>
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="220"/>
+                <DataGridTextColumn Header="Посл. дата" Binding="{Binding LastOrder.PumpingDate, StringFormat=dd.MM.yyyy}" Width="130"/>
+                <DataGridTextColumn Header="Кубы" Binding="{Binding LastOrder.CubeAmount}" Width="90"/>
+                <DataGridTextColumn Header="Оплата" Binding="{Binding LastOrder.PaymentType, Converter={StaticResource PaymentTypeConverter}}" Width="120"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding LastOrder.Price, StringFormat=N2}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
