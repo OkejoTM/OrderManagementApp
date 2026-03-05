@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="OrderManagement.WPF.Views.AreaListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="Районы" FontSize="24" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,16"/>
+
+        <!-- Toolbar -->
+        <WrapPanel Grid.Row="1" Margin="0,0,0,12">
+            <Button Content="＋ Добавить" Command="{Binding AddCommand}"/>
+            <Button Content="✎ Редактировать" Command="{Binding EditCommand}"/>
+            <Button Content="✕ Удалить" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}"/>
+            <Button Content="📋 Адреса" Command="{Binding OpenAddressesCommand}"/>
+            <Button Content="⟳ Обновить" Command="{Binding LoadCommand}" Style="{StaticResource SecondaryButton}"/>
+        </WrapPanel>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Areas}"
+                  SelectedItem="{Binding SelectedArea}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  CanUserAddRows="False">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenAddressesCommand}"/>
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

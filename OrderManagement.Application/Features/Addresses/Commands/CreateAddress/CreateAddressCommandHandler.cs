@@ -8,7 +8,7 @@ public class CreateAddressCommandHandler(IRepository<Address> repository) : IReq
 {
     public async Task<Guid> Handle(CreateAddressCommand request, CancellationToken ct)
     {
-        var address = new Address(request.Name);
+        var address = new Address(request.AreaId, request.Name);
         await repository.AddAsync(address, ct);
         await repository.SaveChangesAsync(ct);
         return address.Id;

@@ -2,4 +2,4 @@
 
 namespace OrderManagement.Application.Features.Addresses.Commands.CreateAddress;
 
-public record CreateAddressCommand(string Name) : IRequest<Guid>;
+public record CreateAddressCommand(Guid AreaId, string Name) : IRequest<Guid>;

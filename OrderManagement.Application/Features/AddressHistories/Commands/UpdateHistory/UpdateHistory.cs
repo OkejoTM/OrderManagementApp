@@ -6,6 +6,6 @@ namespace OrderManagement.Application.Features.AddressHistories.Commands.UpdateH
 public record UpdateHistoryCommand(
     Guid Id,
     DateOnly PumpingDate,
-    int CubeAmount,
+    double CubeAmount,
     PaymentType PaymentType,
     double Price) : IRequest;

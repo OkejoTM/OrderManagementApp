@@ -6,6 +6,6 @@ namespace OrderManagement.Application.Features.AddressHistories.Commands.CreateH
 public record CreateHistoryCommand(
     Guid AddressId,
     DateOnly PumpingDate,
-    int CubeAmount,
+    double CubeAmount,
     PaymentType PaymentType,
     double Price) : IRequest<Guid>;

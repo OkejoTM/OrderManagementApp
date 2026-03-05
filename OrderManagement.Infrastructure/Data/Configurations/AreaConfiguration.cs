@@ -4,9 +4,9 @@ using OrderManagement.Domain.Entities;
 
 namespace OrderManagement.Infrastructure.Data.Configurations;
 
-public class AddressConfiguration : IEntityTypeConfiguration<Address>
+public class AreaConfiguration : IEntityTypeConfiguration<Area>
 {
-    public void Configure(EntityTypeBuilder<Address> builder)
+    public void Configure(EntityTypeBuilder<Area> builder)
     {
         builder.HasKey(a => a.Id);
 
@@ -14,15 +14,13 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
             .IsRequired()
             .HasMaxLength(256);
 
-        builder.HasIndex(a => a.AreaId);
-
-        builder.HasMany(a => a.Histories)
-            .WithOne(h => h.Address)
-            .HasForeignKey(h => h.AddressId)
+        builder.HasMany(a => a.Addresses)
+            .WithOne(addr => addr.Area)
+            .HasForeignKey(addr => addr.AreaId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Metadata
-            .FindNavigation(nameof(Address.Histories))!
+            .FindNavigation(nameof(Area.Addresses))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

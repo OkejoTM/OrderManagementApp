@@ -8,6 +8,9 @@
         Background="#F5F5F5"
         Icon="pack://application:,,,/app.ico">
     <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:AreaListViewModel}">
+            <views:AreaListView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AddressListViewModel}">
             <views:AddressListView/>
         </DataTemplate>

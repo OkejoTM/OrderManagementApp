@@ -12,7 +12,7 @@ public class GetAddressesQueryHandler(IRepository<Address> repository)
 {
     public async Task<IReadOnlyList<AddressDto>> Handle(GetAddressesQuery request, CancellationToken ct)
     {
-        var spec = new AddressWithLatestHistorySpecification(request.NameFilter, request.OrderByNameDescending);
+        var spec = new AddressWithLatestHistorySpecification(request.AreaId, request.NameFilter, request.OrderByNameDescending);
         var addresses = await repository.ListAsync(spec, ct);
         return ManualMapper.ToDtoList(addresses);
     }

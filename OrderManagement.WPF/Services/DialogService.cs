@@ -11,6 +11,7 @@ public class DialogService : IDialogService
     {
         Window dialog = viewModel switch
         {
+            AreaDialogViewModel => new AreaDialog(),
             AddressDialogViewModel => new AddressDialog(),
             HistoryDialogViewModel => new HistoryDialog(),
             _ => throw new ArgumentException($"No dialog registered for {typeof(TViewModel).Name}")

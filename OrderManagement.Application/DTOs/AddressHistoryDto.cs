@@ -6,7 +6,7 @@ public class AddressHistoryDto
 {
     public Guid Id { get; set; }
     public DateOnly PumpingDate { get; set; }
-    public int CubeAmount { get; set; }
+    public double CubeAmount { get; set; }
     public PaymentType PaymentType { get; set; }
     public double Price { get; set; }
     public Guid AddressId { get; set; }

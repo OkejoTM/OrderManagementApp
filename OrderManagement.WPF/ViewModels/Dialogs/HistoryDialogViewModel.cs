@@ -13,8 +13,8 @@ public class HistoryDialogViewModel : ViewModelBase
         set => SetField(ref _pumpingDate, value);
     }
 
-    private int _cubeAmount;
-    public int CubeAmount
+    private double _cubeAmount;
+    public double CubeAmount
     {
         get => _cubeAmount;
         set => SetField(ref _cubeAmount, value);
@@ -45,7 +45,7 @@ public class HistoryDialogViewModel : ViewModelBase
 
     public HistoryDialogViewModel(
         DateTime? pumpingDate = null,
-        int? cubeAmount = null,
+        double? cubeAmount = null,
         PaymentType? paymentType = null,
         double? price = null)
     {

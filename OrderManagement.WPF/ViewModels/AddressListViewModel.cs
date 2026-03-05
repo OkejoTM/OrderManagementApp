@@ -11,11 +11,18 @@ using OrderManagement.WPF.ViewModels.Dialogs;
 
 namespace OrderManagement.WPF.ViewModels;
 
-public class AddressListViewModel : ViewModelBase
+public class AddressListViewModel : ViewModelBase, IParameterReceiver
 {
     private readonly IMediator _mediator;
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
+
+    private AreaDto _area = null!;
+    public AreaDto Area
+    {
+        get => _area;
+        private set => SetField(ref _area, value);
+    }
 
     private ObservableCollection<AddressDto> _addresses = [];
     public ObservableCollection<AddressDto> Addresses
@@ -59,6 +66,7 @@ public class AddressListViewModel : ViewModelBase
     public AsyncRelayCommand DeleteCommand { get; }
     public RelayCommand OpenHistoryCommand { get; }
     public RelayCommand ToggleSortCommand { get; }
+    public RelayCommand GoBackCommand { get; }
 
     public AddressListViewModel(
         IMediator mediator,
@@ -75,13 +83,24 @@ public class AddressListViewModel : ViewModelBase
         DeleteCommand = new AsyncRelayCommand(_ => DeleteAddressAsync(), _ => SelectedAddress is not null);
         OpenHistoryCommand = new RelayCommand(_ => OpenHistory(), _ => SelectedAddress is not null);
         ToggleSortCommand = new RelayCommand(_ => OrderByNameDescending = !OrderByNameDescending);
+        GoBackCommand = new RelayCommand(_ => _navigationService.GoBack());
+    }
 
-        _ = LoadAddressesAsync();
+    public void ReceiveParameter(object? parameter)
+    {
+        if (parameter is AreaDto area)
+        {
+            Area = area;
+            _ = LoadAddressesAsync();
+        }
     }
 
     private async Task LoadAddressesAsync()
     {
+        if (Area is null) return;
+
         var query = new GetAddressesQuery(
+            Area.Id,
             string.IsNullOrWhiteSpace(NameFilter) ? null : NameFilter,
             OrderByNameDescending);
 
@@ -96,7 +115,7 @@ public class AddressListViewModel : ViewModelBase
 
         if (result == true)
         {
-            await _mediator.Send(new CreateAddressCommand(dialog.Name));
+            await _mediator.Send(new CreateAddressCommand(Area.Id, dialog.Name));
             await LoadAddressesAsync();
         }
     }

@@ -10,6 +10,6 @@ public class MainViewModel : ViewModelBase
     public MainViewModel(NavigationService navigationService)
     {
         NavigationService = navigationService;
-        NavigationService.NavigateTo<AddressListViewModel>();
+        NavigationService.NavigateTo<AreaListViewModel>();
     }
 }

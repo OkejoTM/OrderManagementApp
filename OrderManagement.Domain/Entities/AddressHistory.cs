@@ -6,7 +6,7 @@ public class AddressHistory
 {
     public Guid Id { get; private set; }
     public DateOnly PumpingDate { get; private set; }
-    public int CubeAmount { get; private set; }
+    public double CubeAmount { get; private set; }
     public PaymentType PaymentType { get; private set; }
     public double Price { get; private set; }
 
@@ -15,7 +15,7 @@ public class AddressHistory
 
     private AddressHistory() { }
 
-    public AddressHistory(Guid addressId, DateOnly pumpingDate, int cubeAmount, PaymentType paymentType, double price)
+    public AddressHistory(Guid addressId, DateOnly pumpingDate, double cubeAmount, PaymentType paymentType, double price)
     {
         Id = Guid.NewGuid();
         AddressId = addressId;
@@ -25,7 +25,7 @@ public class AddressHistory
         Price = price;
     }
 
-    public void Update(DateOnly pumpingDate, int cubeAmount, PaymentType paymentType, double price)
+    public void Update(DateOnly pumpingDate, double cubeAmount, PaymentType paymentType, double price)
     {
         PumpingDate = pumpingDate;
         CubeAmount = cubeAmount;

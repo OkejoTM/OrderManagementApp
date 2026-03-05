@@ -36,6 +36,7 @@ public partial class App : System.Windows.Application
                 services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<NavigationService>());
                 services.AddSingleton<IDialogService, DialogService>();
 
+                services.AddTransient<AreaListViewModel>();
                 services.AddTransient<AddressListViewModel>();
                 services.AddTransient<AddressHistoryViewModel>();
                 services.AddSingleton<MainViewModel>();

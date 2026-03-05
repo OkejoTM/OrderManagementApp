@@ -14,8 +14,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Title -->
-        <TextBlock Grid.Row="0" Text="Адреса" FontSize="24" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,16"/>
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+            <Button Content="← Назад" Command="{Binding GoBackCommand}" Style="{StaticResource SecondaryButton}"/>
+            <TextBlock Text="Адреса:" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"
+                       Foreground="#1E293B" Margin="8,0,8,0"/>
+            <TextBlock Text="{Binding Area.Name}" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"
+                       Foreground="#3B82F6"/>
+        </StackPanel>
 
         <!-- Toolbar -->
         <WrapPanel Grid.Row="1" Margin="0,0,0,12">

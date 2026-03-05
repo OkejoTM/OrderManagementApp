@@ -5,6 +5,15 @@ namespace OrderManagement.Application.Mapping;
 
 public static class ManualMapper
 {
+    public static AreaDto ToDto(Area area)
+    {
+        return new AreaDto
+        {
+            Id = area.Id,
+            Name = area.Name
+        };
+    }
+
     public static AddressDto ToDto(Address address)
     {
         var lastOrder = address.Histories
@@ -30,6 +39,11 @@ public static class ManualMapper
             Price = history.Price,
             AddressId = history.AddressId
         };
+    }
+
+    public static IReadOnlyList<AreaDto> ToDtoList(IEnumerable<Area> areas)
+    {
+        return areas.Select(ToDto).ToList().AsReadOnly();
     }
 
     public static IReadOnlyList<AddressDto> ToDtoList(IEnumerable<Address> addresses)
