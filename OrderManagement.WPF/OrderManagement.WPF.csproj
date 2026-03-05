@@ -6,7 +6,6 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
-        <ApplicationIcon>app.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,6 +28,7 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+      <Resource Include="app.ico" />
     </ItemGroup>
     
     <ItemGroup>

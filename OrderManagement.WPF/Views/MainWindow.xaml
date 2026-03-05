@@ -6,7 +6,7 @@
         Title="Управление заказами" Width="1000" Height="650"
         WindowStartupLocation="CenterScreen"
         Background="#F5F5F5"
-        Icon="/app.ico">
+        Icon="pack://application:,,,/app.ico">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:AddressListViewModel}">
             <views:AddressListView/>
