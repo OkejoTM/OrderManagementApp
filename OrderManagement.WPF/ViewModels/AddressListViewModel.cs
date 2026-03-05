@@ -17,7 +17,7 @@ public class AddressListViewModel : ViewModelBase, IParameterReceiver
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
 
-    private const int PageSize = 9;
+    private const int PageSize = 8;
 
     private AreaDto _area = null!;
     public AreaDto Area

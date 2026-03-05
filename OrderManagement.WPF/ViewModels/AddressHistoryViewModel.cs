@@ -17,7 +17,7 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
 
-    private const int PageSize = 9;
+    private const int PageSize = 8;
 
     private AddressDto _address = null!;
     public AddressDto Address

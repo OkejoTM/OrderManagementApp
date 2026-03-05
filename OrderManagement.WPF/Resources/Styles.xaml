@@ -126,11 +126,11 @@
 
     <!-- DataGrid -->
     <Style TargetType="DataGrid">
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="#E2E8F0"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="RowHeight" Value="36"/>
+        <Setter Property="RowHeight" Value="40"/>
         <Setter Property="GridLinesVisibility" Value="Horizontal"/>
         <Setter Property="HorizontalGridLinesBrush" Value="#F1F5F9"/>
         <Setter Property="AlternatingRowBackground" Value="#F8FAFC"/>
@@ -138,7 +138,7 @@
     </Style>
 
     <Style TargetType="DataGridColumnHeader">
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Background" Value="#F1F5F9"/>
         <Setter Property="Foreground" Value="#334155"/>
