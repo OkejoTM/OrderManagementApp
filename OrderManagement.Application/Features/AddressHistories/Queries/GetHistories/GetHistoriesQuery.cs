@@ -7,4 +7,6 @@ public record GetHistoriesQuery(
     Guid AddressId,
     DateOnly? DateFrom = null,
     DateOnly? DateTo = null,
-    bool OrderByDateDescending = true) : IRequest<IReadOnlyList<AddressHistoryDto>>;
+    bool OrderByDateDescending = true,
+    int PageNumber = 1,
+    int PageSize = 15) : IRequest<PagedResult<AddressHistoryDto>>;

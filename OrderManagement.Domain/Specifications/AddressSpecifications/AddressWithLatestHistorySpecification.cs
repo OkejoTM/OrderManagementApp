@@ -5,7 +5,12 @@ namespace OrderManagement.Domain.Specifications.AddressSpecifications;
 
 public class AddressWithLatestHistorySpecification : BaseSpecification<Address>
 {
-    public AddressWithLatestHistorySpecification(Guid areaId, string? nameFilter = null, bool orderByNameDescending = false)
+    public AddressWithLatestHistorySpecification(
+        Guid areaId,
+        string? nameFilter = null,
+        bool orderByNameDescending = false,
+        int? pageNumber = null,
+        int? pageSize = null)
     {
         AddInclude(a => a.Histories);
 
@@ -25,6 +30,11 @@ public class AddressWithLatestHistorySpecification : BaseSpecification<Address>
         else
         {
             ApplyOrderBy(a => a.Name);
+        }
+
+        if (pageNumber.HasValue && pageSize.HasValue)
+        {
+            ApplyPaging((pageNumber.Value - 1) * pageSize.Value, pageSize.Value);
         }
     }
 }

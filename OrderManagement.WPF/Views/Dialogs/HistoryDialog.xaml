@@ -9,6 +9,7 @@
         Background="#F5F5F5">
     <Window.Resources>
         <converters:PaymentTypeConverter x:Key="PaymentTypeConverter"/>
+        <converters:DoubleInputConverter x:Key="DoubleInputConverter"/>
     </Window.Resources>
 
     <Grid Margin="24">
@@ -33,7 +34,9 @@
         <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PumpingDate}" Margin="0,0,0,10"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Кубы:" VerticalAlignment="Center" Margin="0,0,0,10" Foreground="#475569"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CubeAmount, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+        <TextBox Grid.Row="2" Grid.Column="1"
+                 Text="{Binding CubeAmount, Converter={StaticResource DoubleInputConverter}, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="0,0,0,10"/>
 
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Тип оплаты:" VerticalAlignment="Center" Margin="0,0,0,10" Foreground="#475569"/>
         <ComboBox Grid.Row="3" Grid.Column="1"
@@ -48,7 +51,9 @@
         </ComboBox>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Цена:" VerticalAlignment="Center" Margin="0,0,0,10" Foreground="#475569"/>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+        <TextBox Grid.Row="4" Grid.Column="1"
+                 Text="{Binding Price, Converter={StaticResource DoubleInputConverter}, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="0,0,0,10"/>
 
         <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">

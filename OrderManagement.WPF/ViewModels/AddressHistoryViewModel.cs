@@ -17,6 +17,8 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
 
+    private const int PageSize = 9;
+
     private AddressDto _address = null!;
     public AddressDto Address
     {
@@ -45,7 +47,11 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
         set
         {
             if (SetField(ref _dateFrom, value))
+            {
+                _currentPage = 1;
+                OnPropertyChanged(nameof(CurrentPage));
                 _ = LoadHistoriesAsync();
+            }
         }
     }
 
@@ -56,7 +62,11 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
         set
         {
             if (SetField(ref _dateTo, value))
+            {
+                _currentPage = 1;
+                OnPropertyChanged(nameof(CurrentPage));
                 _ = LoadHistoriesAsync();
+            }
         }
     }
 
@@ -71,12 +81,35 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
         }
     }
 
+    private int _currentPage = 1;
+    public int CurrentPage
+    {
+        get => _currentPage;
+        private set => SetField(ref _currentPage, value);
+    }
+
+    private int _totalPages = 1;
+    public int TotalPages
+    {
+        get => _totalPages;
+        private set => SetField(ref _totalPages, value);
+    }
+
+    private int _totalCount;
+    public int TotalCount
+    {
+        get => _totalCount;
+        private set => SetField(ref _totalCount, value);
+    }
+
     public AsyncRelayCommand AddCommand { get; }
     public AsyncRelayCommand EditCommand { get; }
     public AsyncRelayCommand DeleteCommand { get; }
     public RelayCommand GoBackCommand { get; }
     public RelayCommand ToggleSortCommand { get; }
     public RelayCommand ClearFilterCommand { get; }
+    public AsyncRelayCommand NextPageCommand { get; }
+    public AsyncRelayCommand PrevPageCommand { get; }
 
     public AddressHistoryViewModel(
         IMediator mediator,
@@ -97,6 +130,8 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
             DateFrom = null;
             DateTo = null;
         });
+        NextPageCommand = new AsyncRelayCommand(_ => GoToNextPageAsync(), _ => CurrentPage < TotalPages);
+        PrevPageCommand = new AsyncRelayCommand(_ => GoToPrevPageAsync(), _ => CurrentPage > 1);
     }
 
     public void ReceiveParameter(object? parameter)
@@ -116,10 +151,32 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
             Address.Id,
             DateFrom.HasValue ? DateOnly.FromDateTime(DateFrom.Value) : null,
             DateTo.HasValue ? DateOnly.FromDateTime(DateTo.Value) : null,
-            OrderByDateDescending);
+            OrderByDateDescending,
+            CurrentPage,
+            PageSize);
 
         var result = await _mediator.Send(query);
-        Histories = new ObservableCollection<AddressHistoryDto>(result);
+        Histories = new ObservableCollection<AddressHistoryDto>(result.Items);
+        TotalCount = result.TotalCount;
+        TotalPages = result.TotalPages == 0 ? 1 : result.TotalPages;
+
+        if (CurrentPage > TotalPages)
+        {
+            CurrentPage = TotalPages;
+            await LoadHistoriesAsync();
+        }
+    }
+
+    private async Task GoToNextPageAsync()
+    {
+        CurrentPage++;
+        await LoadHistoriesAsync();
+    }
+
+    private async Task GoToPrevPageAsync()
+    {
+        CurrentPage--;
+        await LoadHistoriesAsync();
     }
 
     private async Task AddHistoryAsync()

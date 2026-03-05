@@ -9,7 +9,9 @@ public class HistoryByAddressSpecification : BaseSpecification<AddressHistory>
         Guid addressId,
         DateOnly? dateFrom = null,
         DateOnly? dateTo = null,
-        bool orderByDateDescending = true)
+        bool orderByDateDescending = true,
+        int? pageNumber = null,
+        int? pageSize = null)
     {
         if (dateFrom.HasValue && dateTo.HasValue)
         {
@@ -39,6 +41,11 @@ public class HistoryByAddressSpecification : BaseSpecification<AddressHistory>
         else
         {
             ApplyOrderBy(h => h.PumpingDate);
+        }
+
+        if (pageNumber.HasValue && pageSize.HasValue)
+        {
+            ApplyPaging((pageNumber.Value - 1) * pageSize.Value, pageSize.Value);
         }
     }
 }

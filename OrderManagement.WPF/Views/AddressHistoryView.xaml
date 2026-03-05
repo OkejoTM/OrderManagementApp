@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
@@ -55,5 +56,20 @@
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat=N2}" Width="140"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <!-- Pagination -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+            <Button Content="← Назад" Command="{Binding PrevPageCommand}" Style="{StaticResource SecondaryButton}"/>
+            <TextBlock VerticalAlignment="Center" Margin="12,0" Foreground="#475569">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Стр. {0} из {1} (всего: {2})">
+                        <Binding Path="CurrentPage"/>
+                        <Binding Path="TotalPages"/>
+                        <Binding Path="TotalCount"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <Button Content="Вперёд →" Command="{Binding NextPageCommand}" Style="{StaticResource SecondaryButton}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -21,6 +21,18 @@ public class GenericRepository<T>(AppDbContext context) : IRepository<T>
         return await query.ToListAsync(ct);
     }
 
+    public async Task<int> CountAsync(ISpecification<T> specification, CancellationToken ct = default)
+    {
+        var query = _dbSet.AsQueryable();
+
+        if (specification.Criteria is not null)
+        {
+            query = query.Where(specification.Criteria);
+        }
+
+        return await query.CountAsync(ct);
+    }
+
     public async Task<T> AddAsync(T entity, CancellationToken ct = default)
     {
         await _dbSet.AddAsync(entity, ct);
