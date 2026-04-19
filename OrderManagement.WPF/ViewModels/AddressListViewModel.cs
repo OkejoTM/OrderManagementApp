@@ -164,8 +164,20 @@ public class AddressListViewModel : ViewModelBase, IParameterReceiver
 
     private async Task AddAddressAsync()
     {
-        var dialog = new AddressDialogViewModel();
+        var dialog = new AddressDialogViewModel(_mediator, Area.Id);
         var result = _dialogService.ShowDialog(dialog);
+
+        if (dialog.SelectedSuggestionId is { } suggestionId)
+        {
+            var target = Addresses.FirstOrDefault(a => a.Id == suggestionId)
+                         ?? new AddressDto
+                         {
+                             Id = suggestionId,
+                             Name = dialog.SelectedSuggestionName ?? string.Empty
+                         };
+            _navigationService.NavigateTo<AddressHistoryViewModel>(target);
+            return;
+        }
 
         if (result != true) return;
 

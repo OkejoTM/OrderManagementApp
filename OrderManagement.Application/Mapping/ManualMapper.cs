@@ -41,6 +41,22 @@ public static class ManualMapper
         };
     }
 
+    public static AddressSearchResultDto ToSearchDto(Address address)
+    {
+        var lastOrder = address.Histories
+            .OrderByDescending(h => h.PumpingDate)
+            .FirstOrDefault();
+
+        return new AddressSearchResultDto
+        {
+            AddressId = address.Id,
+            AddressName = address.Name,
+            AreaId = address.AreaId,
+            AreaName = address.Area?.Name ?? string.Empty,
+            LastOrder = lastOrder is not null ? ToDto(lastOrder) : null
+        };
+    }
+
     public static IReadOnlyList<AreaDto> ToDtoList(IEnumerable<Area> areas)
     {
         return areas.Select(ToDto).ToList().AsReadOnly();
@@ -54,5 +70,10 @@ public static class ManualMapper
     public static IReadOnlyList<AddressHistoryDto> ToDtoList(IEnumerable<AddressHistory> histories)
     {
         return histories.Select(ToDto).ToList().AsReadOnly();
+    }
+
+    public static IReadOnlyList<AddressSearchResultDto> ToSearchDtoList(IEnumerable<Address> addresses)
+    {
+        return addresses.Select(ToSearchDto).ToList().AsReadOnly();
     }
 }

@@ -6,7 +6,8 @@
         Width="460" Height="360"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Background="#F5F5F5">
+        Background="#F5F5F5"
+        FocusManager.FocusedElement="{Binding ElementName=CubeAmountTextBox}">
     <Window.Resources>
         <converters:PaymentTypeConverter x:Key="PaymentTypeConverter"/>
         <converters:DoubleInputConverter x:Key="DoubleInputConverter"/>
@@ -34,7 +35,8 @@
         <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PumpingDate}" Margin="0,0,0,10"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Кубы:" VerticalAlignment="Center" Margin="0,0,0,10" Foreground="#475569"/>
-        <TextBox Grid.Row="2" Grid.Column="1"
+        <TextBox x:Name="CubeAmountTextBox"
+                 Grid.Row="2" Grid.Column="1"
                  Text="{Binding CubeAmount, Converter={StaticResource DoubleInputConverter}, UpdateSourceTrigger=PropertyChanged}"
                  Margin="0,0,0,10"/>
 
