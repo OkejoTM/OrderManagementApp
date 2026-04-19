@@ -6,4 +6,5 @@ public interface IDialogService
 {
     bool? ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : ViewModelBase;
     bool Confirm(string message, string title = "Подтверждение");
+    void ShowError(string message, string title = "Ошибка");
 }

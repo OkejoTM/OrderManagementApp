@@ -14,7 +14,14 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
             .IsRequired()
             .HasMaxLength(256);
 
+        builder.Property(a => a.NormalizedName)
+            .IsRequired()
+            .HasMaxLength(256);
+
         builder.HasIndex(a => a.AreaId);
+
+        builder.HasIndex(a => new { a.AreaId, a.NormalizedName })
+            .IsUnique();
 
         builder.HasMany(a => a.Histories)
             .WithOne(h => h.Address)

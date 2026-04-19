@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using MediatR;
+using OrderManagement.Application.Common.Exceptions;
 using OrderManagement.Application.DTOs;
 using OrderManagement.Application.Features.Addresses.Commands.CreateAddress;
 using OrderManagement.Application.Features.Addresses.Commands.DeleteAddress;
@@ -166,10 +167,16 @@ public class AddressListViewModel : ViewModelBase, IParameterReceiver
         var dialog = new AddressDialogViewModel();
         var result = _dialogService.ShowDialog(dialog);
 
-        if (result == true)
+        if (result != true) return;
+
+        try
         {
             await _mediator.Send(new CreateAddressCommand(Area.Id, dialog.Name));
             await LoadAddressesAsync();
+        }
+        catch (DuplicateAddressException ex)
+        {
+            _dialogService.ShowError(ex.Message);
         }
     }
 
@@ -180,10 +187,16 @@ public class AddressListViewModel : ViewModelBase, IParameterReceiver
         var dialog = new AddressDialogViewModel(SelectedAddress.Name);
         var result = _dialogService.ShowDialog(dialog);
 
-        if (result == true)
+        if (result != true) return;
+
+        try
         {
             await _mediator.Send(new UpdateAddressCommand(SelectedAddress.Id, dialog.Name));
             await LoadAddressesAsync();
+        }
+        catch (DuplicateAddressException ex)
+        {
+            _dialogService.ShowError(ex.Message);
         }
     }
 

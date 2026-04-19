@@ -29,4 +29,9 @@ public class DialogService : IDialogService
         var result = MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
         return result == MessageBoxResult.Yes;
     }
+
+    public void ShowError(string message, string title = "Ошибка")
+    {
+        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+    }
 }
