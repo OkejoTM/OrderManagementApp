@@ -8,4 +8,5 @@ public record CreateHistoryCommand(
     DateOnly PumpingDate,
     double CubeAmount,
     PaymentType PaymentType,
-    double Price) : IRequest<Guid>;
+    double Price,
+    string? PumpedBy) : IRequest<Guid>;

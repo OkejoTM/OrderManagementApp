@@ -8,4 +8,5 @@ public record UpdateHistoryCommand(
     DateOnly PumpingDate,
     double CubeAmount,
     PaymentType PaymentType,
-    double Price) : IRequest;
+    double Price,
+    string? PumpedBy) : IRequest;

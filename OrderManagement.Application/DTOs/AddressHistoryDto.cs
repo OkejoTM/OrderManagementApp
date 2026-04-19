@@ -9,5 +9,6 @@ public class AddressHistoryDto
     public double CubeAmount { get; set; }
     public PaymentType PaymentType { get; set; }
     public double Price { get; set; }
+    public string? PumpedBy { get; set; }
     public Guid AddressId { get; set; }
 }

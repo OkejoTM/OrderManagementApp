@@ -11,7 +11,7 @@ public class UpdateHistoryCommandHandler(IRepository<AddressHistory> repository)
         var history = await repository.GetByIdAsync(request.Id, ct)
                       ?? throw new InvalidOperationException($"History with id {request.Id} not found.");
 
-        history.Update(request.PumpingDate, request.CubeAmount, request.PaymentType, request.Price);
+        history.Update(request.PumpingDate, request.CubeAmount, request.PaymentType, request.Price, request.PumpedBy);
         repository.Update(history);
         await repository.SaveChangesAsync(ct);
     }

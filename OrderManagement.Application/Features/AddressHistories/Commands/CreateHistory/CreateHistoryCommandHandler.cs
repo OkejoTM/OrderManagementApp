@@ -14,7 +14,8 @@ public class CreateHistoryCommandHandler(IRepository<AddressHistory> repository)
             request.PumpingDate,
             request.CubeAmount,
             request.PaymentType,
-            request.Price);
+            request.Price,
+            request.PumpedBy);
 
         await repository.AddAsync(history, ct);
         await repository.SaveChangesAsync(ct);

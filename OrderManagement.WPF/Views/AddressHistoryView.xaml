@@ -54,6 +54,7 @@
                 <DataGridTextColumn Header="Кубы" Binding="{Binding CubeAmount}" Width="100"/>
                 <DataGridTextColumn Header="Тип оплаты" Binding="{Binding PaymentType, Converter={StaticResource PaymentTypeConverter}}" Width="140"/>
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat=N2}" Width="140"/>
+                <DataGridTextColumn Header="Кто качал" Binding="{Binding PumpedBy}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -34,6 +34,13 @@ public class HistoryDialogViewModel : ViewModelBase
         set => SetField(ref _price, value);
     }
 
+    private string _pumpedBy = string.Empty;
+    public string PumpedBy
+    {
+        get => _pumpedBy;
+        set => SetField(ref _pumpedBy, value);
+    }
+
     public string Title { get; }
     public bool IsEdit { get; }
 
@@ -47,7 +54,8 @@ public class HistoryDialogViewModel : ViewModelBase
         DateTime? pumpingDate = null,
         double? cubeAmount = null,
         PaymentType? paymentType = null,
-        double? price = null)
+        double? price = null,
+        string? pumpedBy = null)
     {
         IsEdit = pumpingDate is not null;
         Title = IsEdit ? "Редактировать заказ" : "Новый заказ";
@@ -58,6 +66,7 @@ public class HistoryDialogViewModel : ViewModelBase
             CubeAmount = cubeAmount!.Value;
             PaymentType = paymentType!.Value;
             Price = price!.Value;
+            PumpedBy = pumpedBy ?? string.Empty;
         }
 
         SaveCommand = new RelayCommand(Save, _ => CubeAmount > 0 && Price > 0);

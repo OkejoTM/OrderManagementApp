@@ -37,6 +37,7 @@ public static class ManualMapper
             CubeAmount = history.CubeAmount,
             PaymentType = history.PaymentType,
             Price = history.Price,
+            PumpedBy = history.PumpedBy,
             AddressId = history.AddressId
         };
     }

@@ -191,7 +191,8 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
                 DateOnly.FromDateTime(dialog.PumpingDate),
                 dialog.CubeAmount,
                 dialog.PaymentType,
-                dialog.Price));
+                dialog.Price,
+                dialog.PumpedBy));
 
             await LoadHistoriesAsync();
         }
@@ -205,7 +206,8 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
             SelectedHistory.PumpingDate.ToDateTime(TimeOnly.MinValue),
             SelectedHistory.CubeAmount,
             SelectedHistory.PaymentType,
-            SelectedHistory.Price);
+            SelectedHistory.Price,
+            SelectedHistory.PumpedBy);
 
         var result = _dialogService.ShowDialog(dialog);
 
@@ -216,7 +218,8 @@ public class AddressHistoryViewModel : ViewModelBase, IParameterReceiver
                 DateOnly.FromDateTime(dialog.PumpingDate),
                 dialog.CubeAmount,
                 dialog.PaymentType,
-                dialog.Price));
+                dialog.Price,
+                dialog.PumpedBy));
 
             await LoadHistoriesAsync();
         }

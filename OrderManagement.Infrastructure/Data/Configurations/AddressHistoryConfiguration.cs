@@ -24,6 +24,9 @@ public class AddressHistoryConfiguration : IEntityTypeConfiguration<AddressHisto
         builder.Property(h => h.Price)
             .IsRequired();
 
+        builder.Property(h => h.PumpedBy)
+            .HasMaxLength(128);
+
         builder.HasIndex(h => h.AddressId);
     }
 }
